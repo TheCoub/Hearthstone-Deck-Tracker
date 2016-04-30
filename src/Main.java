@@ -12,10 +12,73 @@ public class Main {
 		System.out.println("Hello!");
 		
 		JFrame frame = new JFrame("InputDialog Example #1");
-		String costString = JOptionPane.showInputDialog(frame, "What cost minions do you want to see?");
+		String filterString = JOptionPane.showInputDialog(frame, "What do you want to see?");
 		
-		int costSearch = Integer.parseInt(costString);
-
+		String spyString = " ";
+		
+		String attackString = " ";
+		
+		String healthString = " ";
+		
+		String costString = " ";
+		
+		boolean searchingCost = false;
+		
+		boolean searchingAttack = false;
+		
+		boolean searchingHealth = false;
+		
+		int costSearch = -1;
+		int attackSearch = -1;
+		int healthSearch = -1;
+		
+		if(filterString.equals("cost") || filterString.equals("Cost")){
+			
+			costString = JOptionPane.showInputDialog(frame, "What cost minions do you want to see?");
+			costSearch = Integer.parseInt(costString);
+			searchingCost = true;
+		
+		} else if(filterString.equals("attack") || filterString.equals("Attack")){
+			
+			attackString = JOptionPane.showInputDialog(frame, "What attack minions do you want to see?");
+			attackSearch = Integer.parseInt(attackString);
+			searchingAttack = true;
+			
+		} else if(filterString.equals("spy") || filterString.equals("Spy")){
+			System.out.println("It's Camden.");
+		} else if(filterString.equals("health") || filterString.equals("Health")){
+			
+			healthString = JOptionPane.showInputDialog(frame, "What health minions do you want to see?");
+			healthSearch = Integer.parseInt(healthString);
+			searchingHealth = true;
+			
+		}
+		
+		//Creating the spells in the deck
+		Card arcBlast = new Card("Spell", 1, "Arcane Blast");
+		
+		Card mirImage = new Card("Spell", 1, "Mirror Image");
+		
+		Card frstbolt = new Card("Spell", 2, "Frostbolt");
+		
+		Card arcInt = new Card("Spell", 3, "Arcane Intellect");
+		
+		Card fBall = new Card("Spell", 4, "Fireball");
+		
+		Card poly = new Card("Spell", 4, "Polymorph");
+		
+		Card flamestrke = new Card("Spell", 7, "Flamestrike");
+		
+		List<Card> spells = new ArrayList<Card>();
+		
+		spells.add(arcBlast);
+		spells.add(mirImage);
+		spells.add(frstbolt);
+		spells.add(arcInt);
+		spells.add(fBall);
+		spells.add(poly);
+		spells.add(flamestrke);
+		
 		//Creating the minions in the deck
 		Minionclass manaWyrm = new Minionclass("Minion", 1, "Mana Wyrm", 1, 3);
 		
@@ -48,22 +111,36 @@ public class Main {
 		minions.add(faceSum);
 		minions.add(rag);
 		minions.add(yogg);
-		
-		
-
+			
 		//Creates bucket for costed minions
-		List<Minionclass> CostedMinions = minionsOfCost(costSearch, minions);
-		for (Minionclass minion : CostedMinions){
+		if(searchingCost){
+			List<Minionclass> CostedMinions = minionsOfCost(costSearch, minions);
+			for (Minionclass minion : CostedMinions){
+			
+				System.out.println(minion.toString());			
+			}
+			List<Card> CostedSpells = spellsOfCost(costSearch, spells);
+			for (Card spell : CostedSpells){
+				
+				System.out.println(spell.toString());
+			}
+		}
+		//Creates bucket for attack of minions
+		if(searchingAttack){
+			List<Minionclass> AttackMinions = minionsOfAttack(attackSearch, minions);
+			for (Minionclass minion : AttackMinions){
 			
 			System.out.println(minion.toString());			
-		}		
-	
-		Weaponclass axe = new Weaponclass("Weapon", 2, "Fiery War Axe", 3, 2);
-		//System.out.println(axe);
-		
-		Card muster = new Card("Spell", 3, "Muster for Battle");
-		//System.out.println(muster);
-		
+			}
+		}
+		//Creates bucket for health of minions
+		if(searchingHealth){
+			List<Minionclass> HealthMinions = minionsOfHealth(healthSearch, minions);
+			for (Minionclass minion : HealthMinions){
+			
+			System.out.println(minion.toString());			
+			}
+		}	
 	}
 	//List that adds all minions of costedMinions
 	private static List<Minionclass> minionsOfCost(int cost, List<Minionclass> authorityList){
@@ -76,4 +153,44 @@ public class Main {
 		}
 		return output;
 	}
+	private static List<Card> spellsOfCost(int cost, List<Card> authorityList){
+		
+		List<Card> output = new ArrayList<Card>();
+		for(Card spell : authorityList){
+			if(spell.cost == cost){
+				output.add(spell);
+			} 
+		}
+		return output;
+	}
+	
+	//List that adds all minions of attackMinions
+	private static List<Minionclass> minionsOfAttack(int attack, List<Minionclass> authorityList){
+		
+		List<Minionclass> output = new ArrayList<Minionclass>();
+		for(Minionclass minion : authorityList){
+			if(minion.attack == attack){
+				output.add(minion);
+			}
+		}
+		return output;
+	}
+	
+	//List that adds all minions of healthMinions
+		private static List<Minionclass> minionsOfHealth(int health, List<Minionclass> authorityList){
+			
+			List<Minionclass> output = new ArrayList<Minionclass>();
+			for(Minionclass minion : authorityList){
+				if(minion.health == health){
+					output.add(minion);
+				}
+			}
+			return output;
+		}
+	Weaponclass axe = new Weaponclass("Weapon", 2, "Fiery War Axe", 3, 2);
+	//System.out.println(axe);
+	
+	Card muster = new Card("Spell", 3, "Muster for Battle");
+	//System.out.println(muster);
+
 }
