@@ -22,6 +22,10 @@ public class Main {
 		
 		String costString = " ";
 		
+		String statsString = " ";
+		
+		boolean searchingStats = false; 
+		
 		boolean searchingCost = false;
 		
 		boolean searchingAttack = false;
@@ -34,7 +38,7 @@ public class Main {
 		
 		if(filterString.equals("cost") || filterString.equals("Cost")){
 			
-			costString = JOptionPane.showInputDialog(frame, "What cost minions do you want to see?");
+			costString = JOptionPane.showInputDialog(frame, "What cost cards do you want to see?");
 			costSearch = Integer.parseInt(costString);
 			searchingCost = true;
 		
@@ -52,6 +56,10 @@ public class Main {
 			healthSearch = Integer.parseInt(healthString);
 			searchingHealth = true;
 			
+		} else if(filterString.equals("stats") || filterString.equals("Stats")){
+			
+			statsString = JOptionPane.showInputDialog(frame, "What stat do you want to see?");
+			searchingStats = true;
 		}
 		
 		//Creating the spells in the deck
@@ -140,8 +148,17 @@ public class Main {
 			
 			System.out.println(minion.toString());			
 			}
-		}	
+		}
+		//Creates bucket for all minions
+		double minionsInDeck = minions.size();
+
+		if(searchingStats && (statsString.equals("Percent of Minions") || statsString.equals("percent of minons"))){
+		
+			System.out.println((minionsInDeck/30) * 100 + "%");
+			
+		}
 	}
+	
 	//List that adds all minions of costedMinions
 	private static List<Minionclass> minionsOfCost(int cost, List<Minionclass> authorityList){
 		
