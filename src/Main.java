@@ -119,7 +119,27 @@ public class Main {
 		minions.add(faceSum);
 		minions.add(rag);
 		minions.add(yogg);
+		
+		
+		Map<Card, Integer> deck = new HashMap<Card, Integer>();
+		deck.put(manaWyrm, 1);
+		if(deck.containsKey(manaWyrm)) {
+			deck.put(manaWyrm,  deck.get(manaWyrm) + 1 );
+		}
+		//System.out.println(deck.get(manaWyrm));
+		int count = 0;
+		for (Card card : deck.keySet()){
+			if(card instanceof Minionclass){
+				count = count + deck.get(card);
+				if((  ((Minionclass) card).attack  ) == 1){
+					System.out.println(count);
+				}
+			}
+		}
 			
+		if(deck.get(manaWyrm) == 1){
+			minions.add(manaWyrm);
+		}
 		//Creates bucket for costed minions
 		if(searchingCost){
 			List<Minionclass> CostedMinions = minionsOfCost(costSearch, minions);
